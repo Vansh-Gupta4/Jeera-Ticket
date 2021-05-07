@@ -1,11 +1,11 @@
-let filterColor = document.querySelectorAll(".filter");
+let filterColor = document.querySelectorAll(".filter");   //querySelectorAll h ..therefore array milega
 let mainContainer = document.querySelector(".main-container");
-let modalColors = document.querySelectorAll(".modal-color");
+let modalColors = document.querySelectorAll(".modal-color");   //querySelectorAll h ..therefore array milega
 let modalContainer = document.querySelector(".modal_container");
 let taskBox = document.querySelector(".task_box");
 let modalFlag = false;
 let plusBtn = document.querySelector(".plus");
-let iColor="black";
+let iColor="black";   //initial color is black
 let colors=["pink","blue","green","black"];
 
 for (let i = 0; i < filterColor.length; i++) {
@@ -25,11 +25,11 @@ plusBtn.addEventListener("click", function () {
     // let task = prompt("Enter Yout Task");
     // let color = prompt("Color");
 
-   modalContainer.style.display="flex";
+   modalContainer.style.display="flex";   //jab "+" par click toh modal container visible ho jayega
     
 })
 
-taskBox.addEventListener("keydown",function(e){
+taskBox.addEventListener("keydown",function(e){    //agar text area par click karenge toh fiunction chalega 
     
     if (e.key == "Enter" && taskBox.value != "") {
         let taskContainer = document.createElement("div");  //creates div
@@ -43,32 +43,34 @@ taskBox.addEventListener("keydown",function(e){
              mainContainer.appendChild(taskContainer);
 
             //cleanup code
-             modalContainer.style.display="none";
-             taskBox.value="";
+             modalContainer.style.display="none";   //modal invisble ho jayega
+             taskBox.value="";    //ab next time par appear hoga toh textarea khaali milega
              iColor="black";
-             addFunctionality(taskContainer);
+             addFunctionality(taskContainer);  
     }
 })
 
-for(let i=0;i<modalColors.length;i++){
-    modalColors[i].addEventListener("click",function(){
-        let color=modalColors[i].classList[1];
+for(let i=0; i<modalColors.length; i++){
+    modalColors[i].addEventListener("click", function(){   //agar kisi bhi color par click ho toh function chalega
+        let color=modalColors[i].classList[1];   //classList=>uss element par jitni class h h voh de deta h (example => "modal-color pink" mai se humne "pink" choose kiya)
         iColor=color;
         for(let j=0;j<modalColors.length;j++){
-            modalColors[j].classList.remove("border");
+            //remove "border" class from every color
+            modalColors[j].classList.remove("border");   //remove function aisa h jiss par "border" class lagi h usse remove kar dega aur jispar nhi lagi usko kuch nhi bolega (err nhi dega)
         }
-        modalColors[i].classList.add("border");
+        modalColors[i].classList.add("border");   //jis par click kiya uss par "border" class add kar dega
     })
 }
 
+//ticket bane ke baad uska color change karne ka function
 function addFunctionality(taskContainer){
-    let ticketColor=taskContainer.querySelector(".ticket_color");
-    ticketColor.addEventListener("click",function(){
-        let cColor=ticketColor.classList[1];
-        let idx=colors.indexOf(cColor);
-        let newIdx=(idx+1)%4;
-        let newColor=colors[newIdx];
-        ticketColor.classList.remove(cColor);
-        ticketColor.classList.add(newColor);
+    let ticketColor=taskContainer.querySelector(".ticket_color");  //ticket ka present color ka selector mil jayega
+    ticketColor.addEventListener("click",function(){   //uss selector par click hua toh function chalega
+        let cColor=ticketColor.classList[1];   //isse current color mil jayega
+        let idx=colors.indexOf(cColor);   //indexOf function bata dega ki voh present color konse index par h
+        let newIdx=(idx+1)%4;   //circular array bann jayega
+        let newColor=colors[newIdx];   //new color mil jayega
+        ticketColor.classList.remove(cColor);  //phele wale color ko remove kiya
+        ticketColor.classList.add(newColor);   //aur new color ko set kar dia
     })
 }
