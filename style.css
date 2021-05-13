@@ -73,9 +73,12 @@ background-color:lightpink;
 .main-container{
    min-height: 88vh;
    padding-top: 3rem;
-   padding-left: 3rem;
-   background-color:aliceblue;
+   padding-right: 1vw;
+   padding-left: 3vw;
+   background-color: aliceblue;
    display: flex;
+   gap: 2rem;
+   align-items: baseline;
    justify-content: space-around;
    flex-wrap: wrap;
 }
@@ -110,10 +113,10 @@ background-color:lightpink;
   /* border:solid 1px red; */
   height: 18rem;
   width: 31rem;
-  display: flex;
+  display: flex;  /*kyuki children humme ek ke baad ek chaiye*/
   position: absolute;
   box-shadow: 0 1rem 5rem rgba(0,0,0,0.637);
-  display: none;
+  display: none; /* "none" karne se dikhega nhi*/
 }
 .task_container{
    /* border:1px solid green; */
@@ -131,17 +134,24 @@ background-color:lightpink;
    width: 100%;
    padding: 2rem;
 }
-.modal-color{
-   height: 12%;
-   width: 73%;
-   border-radius: 2px;
-}
 .modal_color-container{
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: space-evenly;
 }
-.border{
+.modal-color{
+   height: 12%;
+   width: 73%;
+   border-radius: 2px;
+}
+
+.border {
    border: 5px solid black;
 }
+
+@media only screen and (min-width: 1800px) {
+   html {
+       font-size: 200%;
+   }
+} 
