@@ -6,7 +6,7 @@ body{
 }
 *{
    box-sizing: border-box;
-   /* border:1px solid red; */
+  
 }
 .pink{
 background-color:lightpink;
@@ -21,10 +21,10 @@ background-color:lightpink;
    background-color:rgb(33, 31, 31);
 }
 .toolbar{
-   display: flex;     /* dono children same line mai aa gye */
+   display: flex;    
    height: 12vh;
    background-color: rgb(32, 29, 29);
-   align-items: center;  /* beech mai le aaya*/
+   align-items: center;  
 }
 .filter_container{
    height: 70%;   /*70% of 12vh*/
@@ -33,7 +33,7 @@ background-color:lightpink;
    border-radius: 3px;
    margin-right: 2rem;
    margin-left: 2rem;
-   display: flex;   /* chaaro children same line mai aa gye */
+   display: flex;  
 } 
 .filter_color-container{
    width: 25%;
@@ -55,7 +55,7 @@ background-color:lightpink;
    background-color: darkgray;
    width: 8rem;
    border-radius: 3px;
-   display: flex;    /*  children same line mai aa gye */
+   display: flex;  
 }
 .fas{
    font-size: x-large;
@@ -74,7 +74,7 @@ background-color:lightpink;
    width: 50%;
    border-right: 1px solid red;
 
-   /* Trick to make content at perfectly center */
+   
    display: flex;
    justify-content: center;
    align-items: center;
@@ -100,7 +100,7 @@ background-color:lightpink;
    width: 14rem;
    background-color: white;
 }
-.ticket_color{   /*ticket ke upar color strip ka selector*/
+.ticket_color{   
    height: 7%;
 }
 .ticket_desc_container{
@@ -160,23 +160,23 @@ background-color:lightpink;
 
 /* modal container */
 .modal_container{
-  /* border:solid 1px red; */
+
   height: 18rem;
   width: 31rem;
 
-  display: flex;  /*kyuki children humme ek ke baad ek chaiye*/
+  display: flex;  
   position: absolute;
   box-shadow: 0 1rem 5rem rgba(0,0,0,0.637);
-  display: none; /* "none" karne se dikhega nhi*/
+  display: none; 
 }
 .task_container{
-   /* border:1px solid green; */
+   
    width: 76%;
    height: 100%;
  
 }
 .modal_color-container{
-   /* border: 1px solid green; */
+ 
    width: 24%;
    height: 100%;
    background-color: #444;
