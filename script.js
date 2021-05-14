@@ -1,25 +1,25 @@
 
-let filterColor = document.querySelectorAll(".filter");   //querySelectorAll h ..therefore array milega
+let filterColor = document.querySelectorAll(".filter");  
 let mainContainer = document.querySelector(".main-container");
-let modalColors = document.querySelectorAll(".modal-color");   //querySelectorAll h ..therefore array milega
+let modalColors = document.querySelectorAll(".modal-color");   
 let modalContainer = document.querySelector(".modal_container");
 let taskBox = document.querySelector(".task_box");
 let modalFlag = false;
 let deleteState = false;
 let plusBtn = document.querySelector(".plus");
 let crossBtn = document.querySelector(".cross");
-let iColor="black";   //initial color is black
+let iColor="black";  
 let colors=["pink","blue","green","black"];
 let filterContainers = document.querySelectorAll(".filter_color-container");
 let infoBtn = document.querySelector(".information_container");
 let body=document.body;
 
-//First of all check is there something in local storage or not
+
 let allTasks = [];
 
 if (localStorage.getItem("allTasks")) {
     let strArr = localStorage.getItem("allTasks");
-    allTasks = JSON.parse(strArr);    //string se wapas normal form mai convert kar lia
+    allTasks = JSON.parse(strArr);    
 
     for (let i = 0; i < allTasks.length; i++) {
         
@@ -28,7 +28,7 @@ if (localStorage.getItem("allTasks")) {
 
 }
 function createTicketFromLocalStorage(taskObj) {
-    let { id, color, task } = taskObj;    //taskObj se id,color and task nikal liya
+    let { id, color, task } = taskObj;    
     let taskContainer = document.createElement("div");
     taskContainer.setAttribute("class", "ticket_container");
     taskContainer.innerHTML = `<div class="ticket_color ${color}"></div>
@@ -56,41 +56,38 @@ for (let i = 0; i < filterColor.length; i++) {
     })
 }
 plusBtn.addEventListener("click", function() {
-    // let task = prompt("Enter Yout Task");
-    // let color = prompt("Color");
-
-   modalContainer.style.display="flex";   //jab "+" par click toh modal container visible ho jayega
-    
+   
+   modalContainer.style.display="flex";  
 })
 crossBtn.addEventListener("click",setDeleteState)
 
-taskBox.addEventListener("keydown",function(e){    //agar text area of modal par click karenge toh function chalega 
+taskBox.addEventListener("keydown",function(e){   
     
     if (e.key == "Enter" && taskBox.value != "") {
-        let taskContainer = document.createElement("div");  //creates div
+        let taskContainer = document.createElement("div");  
         let task=taskBox.value;
         console.log(task)
         taskContainer.setAttribute("class", "ticket_container"); 
-        let id = Math.random().toString(32).slice(2);  //it generates random id
+        let id = Math.random().toString(32).slice(2);
         taskContainer.innerHTML = `<div class="ticket_color ${iColor}"></div>   
              <div class="ticket_desc_container">
                  <div class="ticket_id">#${id}</div>
                  <div class="ticket_desc" >${task}</div>
-             </div>`;  //.innerHTML adds html
+             </div>`;  
              mainContainer.appendChild(taskContainer);
 
-             //for local storage
-            let ticketObj = {}   //ticket bane ke liye ticket color,ticket ka content and ticket id jaruri h...therefore yeh sab hum local stage mai store kar lenge
+            
+            let ticketObj = {}   
             ticketObj.task = task;
             ticketObj.color = iColor;
             ticketObj.id = id;
             allTasks.push(ticketObj);
-            let strArr = JSON.stringify(allTasks);   //local storage key value pair sirf string mai hi store karta h
+            let strArr = JSON.stringify(allTasks);  
             localStorage.setItem('allTasks', strArr);
     
-            //cleanup code
-             modalContainer.style.display="none";   //modal invisble ho jayega
-             taskBox.value="";    //ab next time par appear hoga toh textarea khaali milega
+      
+             modalContainer.style.display="none";   
+             taskBox.value="";    
              iColor="black";
              addFunctionality(taskContainer);
              
@@ -99,38 +96,38 @@ taskBox.addEventListener("keydown",function(e){    //agar text area of modal par
 })
 
 for(let i=0; i<modalColors.length; i++){
-    modalColors[i].addEventListener("click", function(){   //agar modal color mai  kisi bhi color par click ho toh function chalega
-        let color=modalColors[i].classList[1];   //classList=>uss element par jitni class h h voh de deta h (example => "modal-color pink" mai se humne "pink" choose kiya)
+    modalColors[i].addEventListener("click", function(){  
+        let color=modalColors[i].classList[1];  
         iColor=color;
         for(let j=0;j<modalColors.length;j++){
-            //remove "border" class from every color
-            modalColors[j].classList.remove("border");   //remove function aisa h jiss par "border" class lagi h usse remove kar dega aur jispar nhi lagi usko kuch nhi bolega (err nhi dega)
+            
+            modalColors[j].classList.remove("border");   
         }
-        modalColors[i].classList.add("border");   //jis par click kiya uss par "border" class add kar dega
+        modalColors[i].classList.add("border");   
     })
 }
 
-//ticket bane ke baad uska color change karne ka function
-function addFunctionality(taskContainer){
-    let ticketColor=taskContainer.querySelector(".ticket_color");  //ticket ka present color ka selector mil jayega
-    ticketColor.addEventListener("click",function(){   //uss selector par click hua toh function chalega
-        let cColor=ticketColor.classList[1];   //isse current color mil jayega
-        let idx=colors.indexOf(cColor);   //indexOf function bata dega ki voh present color konse index par h
-        let newIdx=(idx+1)%4;   //circular array bann jayega
-        let newColor=colors[newIdx];   //new color mil jayega
-        ticketColor.classList.remove(cColor);  //phele wale color ko remove kiya
-        ticketColor.classList.add(newColor);   //aur new color ko set kar dia
 
-        //Agar hum color change kare toh change of color local storage mai bhi reflect ho
-        let ticketIdElem = taskContainer.querySelector(".ticket_id");    //this will be done by help of ID
-        let id = ticketIdElem.innerText;  //isse id=#ndsovb7r aa jayegi ...ab "#" nikalne ke liye slice
+function addFunctionality(taskContainer){
+    let ticketColor=taskContainer.querySelector(".ticket_color"); 
+    ticketColor.addEventListener("click",function(){   
+        let cColor=ticketColor.classList[1];   
+        let idx=colors.indexOf(cColor);   
+        let newIdx=(idx+1)%4;   
+        let newColor=colors[newIdx];  
+        ticketColor.classList.remove(cColor);  
+        ticketColor.classList.add(newColor);  
+
+      
+        let ticketIdElem = taskContainer.querySelector(".ticket_id");  
+        let id = ticketIdElem.innerText;  
         id = id.slice(1);
         
         for (let i = 0; i < allTasks.length; i++) {
-            if (allTasks[i].id == id) {    //agar jis ki id change kari h voh id local storage mai h toh local storage se uska color update kar do
+            if (allTasks[i].id == id) {   
                 allTasks[i].color = newColor
                 let strArr = JSON.stringify(allTasks);
-                localStorage.setItem('allTasks', strArr);   //local storage mai update kar dia
+                localStorage.setItem('allTasks', strArr);   
             }
         }
 
@@ -142,25 +139,25 @@ function addFunctionality(taskContainer){
 let prevColor = null;
 for (let i = 0; i < filterContainers.length; i++) {
 
-    filterContainers[i].addEventListener("click", function() {   //jis bhi filter par click hua uske chiildren ki class nikal lo
-        let child = filterContainers[i].children[0];    //ek hi element h ..example="filter_color pink" mil gya
-        let color = child.classList[1];             //color="pink" mil gya
+    filterContainers[i].addEventListener("click", function() {
+        let child = filterContainers[i].children[0];    
+        let color = child.classList[1];            
 
-        if (prevColor == color) {     //double click par saari tickets dikha do
-            let ticketContainers = document.querySelectorAll(".ticket_container");   //saare tickets mil gai
-            for (let j = 0; j < ticketContainers.length; j++) {    //saari tickets par jaa kar 
-                ticketContainers[j].style.display = "block";       ///saari tickets dikha do
+        if (prevColor == color) {     
+            let ticketContainers = document.querySelectorAll(".ticket_container");   
+            for (let j = 0; j < ticketContainers.length; j++) {    
+                ticketContainers[j].style.display = "block";       
             }
             prevColor = null;
         } else {
-            let ticketContainers = document.querySelectorAll(".ticket_container");    //saare tickets mil gai
-            for (let j = 0; j < ticketContainers.length; j++) {     //saari tickets par jaa kar 
-                let ticketColor = ticketContainers[j].children[0]; //"ticket_pink" aa gya
-                let mycolor = ticketColor.classList[1];            //isse pink nikal gya 
+            let ticketContainers = document.querySelectorAll(".ticket_container");  
+            for (let j = 0; j < ticketContainers.length; j++) {    
+                let ticketColor = ticketContainers[j].children[0]; 
+                let mycolor = ticketColor.classList[1];           
                 if (mycolor == color) {
-                    ticketContainers[j].style.display = "block";    //jo color choose kiya h voh hi select kiya h toh uss color ki saari tickets show kardo
+                    ticketContainers[j].style.display = "block";   
                 } else {
-                    ticketContainers[j].style.display = "none";    //baaki ko hide
+                    ticketContainers[j].style.display = "none";   
                 }
             }
             prevColor = color;
@@ -175,7 +172,7 @@ for (let i = 0; i < filterContainers.length; i++) {
 
 
 
-function setDeleteState(e) {  //delete btton par click kiya toh black color ka ho jayega
+function setDeleteState(e) {  
 
     let crossBtn = e.currentTarget;
  
@@ -186,7 +183,7 @@ function setDeleteState(e) {  //delete btton par click kiya toh black color ka h
     }
     deleteState = !deleteState;
 }
-function deleteTask(e) {     //agar delete button ki state active h aur fir user kisi ticket par click kare toh remove ticket
+function deleteTask(e) {    
     let taskContainer = e.currentTarget;
     if (deleteState) {
         let TicketIDElem= taskContainer.querySelector(".ticket_id");
@@ -211,7 +208,7 @@ function deleteTask(e) {     //agar delete button ki state active h aur fir user
         }
  }
 
- // Information Button Click
+
 infoBtn.addEventListener("mouseover", function () {
 
 	let functionalities = document.createElement("div");
