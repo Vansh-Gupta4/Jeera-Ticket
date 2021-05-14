@@ -11,6 +11,8 @@ let crossBtn = document.querySelector(".cross");
 let iColor="black";   //initial color is black
 let colors=["pink","blue","green","black"];
 let filterContainers = document.querySelectorAll(".filter_color-container");
+let infoBtn = document.querySelector(".information_container");
+let body=document.body;
 
 //First of all check is there something in local storage or not
 let allTasks = [];
@@ -208,3 +210,45 @@ function deleteTask(e) {     //agar delete button ki state active h aur fir user
       taskContainer.remove();
         }
  }
+
+ // Information Button Click
+infoBtn.addEventListener("mouseover", function () {
+
+	let functionalities = document.createElement("div");
+	functionalities.setAttribute("class", "functionalities");
+	functionalities.innerHTML = `<h2><u>Features:</u></h2>
+	<ul>
+		<li><b>Add Tasks:</b> Click '+' Icon.</li>
+		<br />
+		<li><b>Delete Tasks:</b> Click 'x' Icon.</li>
+		<br />
+		<li>
+			<b>Edit Tasks:</b> Unlock the lock by pressing the lock
+			button and click the task description.
+		</li>
+		<br />
+		<li><b>View All Tasks:</b> Double click any color in the Toolbar.</li>
+		<br />
+		<li>
+			<b>Lock/Unlock Task Editing:</b> Click Lock/Unlock icon on
+			Task Container.
+		</li>
+		<br />
+		<li><b>Change Color of a Task:</b> Click color bar of the Task Container.</li>
+		<br />
+		<li>
+			<b>Filter specific Tasks:</b> Click that specific color in the Toolbar.
+		</li>
+		<br />		
+			
+		<p>
+			<b><i>Your data will be stored for the next time you visit us.</b>
+		<i></i></p>
+	</ul>`;
+	body.appendChild(functionalities);
+});
+
+infoBtn.addEventListener("mouseout", function () {
+
+	body.removeChild(body.childNodes[body.childNodes.length - 1]);
+});
