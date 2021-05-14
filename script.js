@@ -5,17 +5,22 @@ let modalColors = document.querySelectorAll(".modal-color");   //querySelectorAl
 let modalContainer = document.querySelector(".modal_container");
 let taskBox = document.querySelector(".task_box");
 let modalFlag = false;
+let deleteState = false;
 let plusBtn = document.querySelector(".plus");
+let crossBtn = document.querySelector(".cross");
 let iColor="black";   //initial color is black
 let colors=["pink","blue","green","black"];
 let filterContainers = document.querySelectorAll(".filter_color-container");
 
 //First of all check is there something in local storage or not
 let allTasks = [];
+
 if (localStorage.getItem("allTasks")) {
     let strArr = localStorage.getItem("allTasks");
-    allTasks = JSON.parse(strArr);    //sting se wapas normal form mai convert kar lia
+    allTasks = JSON.parse(strArr);    //string se wapas normal form mai convert kar lia
+
     for (let i = 0; i < allTasks.length; i++) {
+        
         createTicketFromLocalStorage(allTasks[i]);
     }
 
@@ -27,10 +32,10 @@ function createTicketFromLocalStorage(taskObj) {
     taskContainer.innerHTML = `<div class="ticket_color ${color}"></div>
         <div class="ticket_desc_container">
         <div class="ticket_id">#${id}</div>
-        <div class="ticket_desc">${task}</div>
+        <div class="ticket_desc" >${task}</div>
         </div>`;
     mainContainer.appendChild(taskContainer);
-   
+    taskContainer.addEventListener("click",deleteTask);
     addFunctionality(taskContainer);
 }
 
@@ -55,18 +60,20 @@ plusBtn.addEventListener("click", function() {
    modalContainer.style.display="flex";   //jab "+" par click toh modal container visible ho jayega
     
 })
+crossBtn.addEventListener("click",setDeleteState)
 
 taskBox.addEventListener("keydown",function(e){    //agar text area of modal par click karenge toh function chalega 
     
     if (e.key == "Enter" && taskBox.value != "") {
         let taskContainer = document.createElement("div");  //creates div
         let task=taskBox.value;
+        console.log(task)
         taskContainer.setAttribute("class", "ticket_container"); 
         let id = Math.random().toString(32).slice(2);  //it generates random id
         taskContainer.innerHTML = `<div class="ticket_color ${iColor}"></div>   
              <div class="ticket_desc_container">
                  <div class="ticket_id">#${id}</div>
-                 <div class="ticket_desc">${task}</div>
+                 <div class="ticket_desc" >${task}</div>
              </div>`;  //.innerHTML adds html
              mainContainer.appendChild(taskContainer);
 
@@ -83,7 +90,9 @@ taskBox.addEventListener("keydown",function(e){    //agar text area of modal par
              modalContainer.style.display="none";   //modal invisble ho jayega
              taskBox.value="";    //ab next time par appear hoga toh textarea khaali milega
              iColor="black";
-             addFunctionality(taskContainer);  
+             addFunctionality(taskContainer);
+             
+             taskContainer.addEventListener("click",deleteTask);
     }
 })
 
@@ -158,3 +167,44 @@ for (let i = 0; i < filterContainers.length; i++) {
 
     })
 } 
+
+
+
+
+
+
+function setDeleteState(e) {  //delete btton par click kiya toh black color ka ho jayega
+
+    let crossBtn = e.currentTarget;
+ 
+    if (deleteState == false) {
+        crossBtn.classList.add("active");
+    } else {
+        crossBtn.classList.remove("active");
+    }
+    deleteState = !deleteState;
+}
+function deleteTask(e) {     //agar delete button ki state active h aur fir user kisi ticket par click kare toh remove ticket
+    let taskContainer = e.currentTarget;
+    if (deleteState) {
+        let TicketIDElem= taskContainer.querySelector(".ticket_id");
+        
+        let TicketID = TicketIDElem.innerText.split("#")[1];
+      
+        for (let i = 0; i < allTasks.length; i++) {
+            let { id } = allTasks[i];
+            console.log(id, TicketID);
+            if (id == TicketID) {
+                
+                allTasks.splice(i, 1);
+                console.log("1");
+                let finalTaskArr = JSON.stringify(allTasks);
+                console.log(finalTaskArr);
+                localStorage.setItem("allTasks", finalTaskArr);
+                taskContainer.remove();
+                break;
+            }
+        }
+      taskContainer.remove();
+        }
+ }
